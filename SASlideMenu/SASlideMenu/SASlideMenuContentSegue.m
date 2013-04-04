@@ -3,6 +3,7 @@
 //  SASlideMenu
 //
 //  Created by Stefano Antonelli on 1/17/13.
+//  Edited by Ryan Spears on 4/4/13.
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
 #import <QuartzCore/QuartzCore.h>
