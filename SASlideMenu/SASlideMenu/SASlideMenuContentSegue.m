@@ -22,8 +22,15 @@
     [rootController.leftMenu.slideMenuDataSource configureMenuButton:menuButton];
     [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents:UIControlEventTouchUpInside];
     
-    UINavigationItem* navigationItem = destination.navigationBar.topItem;
-    navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+    if ([destination isKindOfClass:[UINavigationController class]]) {
+        UINavigationItem* navigationItem = destination.navigationBar.topItem;
+        navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+    } else if ([destination isKindOfClass:[UISplitViewController class]]) {
+        UISplitViewController *sv = (UISplitViewController *)destination;
+        UINavigationController *navC = [sv.viewControllers objectAtIndex:0];
+        UINavigationItem* navigationItem = navC.navigationBar.topItem;
+        navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+    }
     
     Boolean hasRightMenu = NO;
     rootController.isRightMenuEnabled = NO;

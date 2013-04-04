@@ -515,10 +515,10 @@
 		7BF0A68615DE492E00B3B57F /* SASlideMenu */ = {
 			isa = PBXGroup;
 			children = (
-				7BF0A68915DE495500B3B57F /* SASlideMenuDataSource.h */,
-				7B5CA6EE1682121B006E6993 /* SASlideMenuDelegate.h */,
 				7BC688F316A99DA3004ED00D /* SASlideMenuContentSegue.h */,
 				7BC688F416A99DA3004ED00D /* SASlideMenuContentSegue.m */,
+				7BF0A68915DE495500B3B57F /* SASlideMenuDataSource.h */,
+				7B5CA6EE1682121B006E6993 /* SASlideMenuDelegate.h */,
 				7BC688F516A99DA3004ED00D /* SASlideMenuLeftMenuSegue.h */,
 				7BC688F616A99DA3004ED00D /* SASlideMenuLeftMenuSegue.m */,
 				7B28D2D71662B8D8000EE929 /* SASlideMenuRightMenuSegue.h */,
@@ -1044,6 +1044,7 @@
 				7B38FC3916F0797400B7DFC3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7B8C3FD415D8D55800E42A41 /* Build configuration list for PBXProject "SASlideMenu" */ = {
 			isa = XCConfigurationList;
