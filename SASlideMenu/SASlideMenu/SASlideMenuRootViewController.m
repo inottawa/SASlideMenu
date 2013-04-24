@@ -410,6 +410,14 @@ typedef enum {
     }
 }
 
+// for ios5
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ) {
+        return NO;
+    }
+    return YES;
+}
+
 -(void) viewDidLoad{
     [super viewDidLoad];
     
