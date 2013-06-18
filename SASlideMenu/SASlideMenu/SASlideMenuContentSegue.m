@@ -3,7 +3,7 @@
 //  SASlideMenu
 //
 //  Created by Stefano Antonelli on 1/17/13.
-//  Edited by Ryan Spears on 4/4/13.
+//  Edited by Ryan Spears on 6/18/13.
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
 #import <QuartzCore/QuartzCore.h>
@@ -14,29 +14,30 @@
 @implementation SASlideMenuContentSegue
 
 -(void) perform{
- 
+    
     SASlideMenuViewController* source = self.sourceViewController;
     SASlideMenuRootViewController* rootController = source.rootController;
     UINavigationController* destination = self.destinationViewController;
-
+    
     UIButton* menuButton = [[UIButton alloc] init];
-    [rootController.leftMenu.slideMenuDataSource configureMenuButton:menuButton];
     [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents:UIControlEventTouchUpInside];
     
     if ([destination isKindOfClass:[UINavigationController class]]) {
         UINavigationItem* navigationItem = destination.navigationBar.topItem;
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+        [rootController.leftMenu.slideMenuDataSource configureMenuButton:menuButton];
     } else if ([destination isKindOfClass:[UISplitViewController class]]) {
         UISplitViewController *sv = (UISplitViewController *)destination;
         UINavigationController *navC = [sv.viewControllers objectAtIndex:0];
         UINavigationItem* navigationItem = navC.navigationBar.topItem;
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+        [rootController.leftMenu.slideMenuDataSource configureSplitMenuButton:menuButton];
     }
     
     Boolean hasRightMenu = NO;
     rootController.isRightMenuEnabled = NO;
     NSIndexPath* selectedIndexPath = [rootController.leftMenu.tableView indexPathForSelectedRow];
-
+    
     if ([rootController.leftMenu.slideMenuDataSource respondsToSelector:@selector(hasRightMenuForIndexPath:)]) {
         hasRightMenu = [rootController.leftMenu.slideMenuDataSource hasRightMenuForIndexPath:selectedIndexPath];
     }
@@ -51,9 +52,9 @@
             navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightMenuButton];
         }
     }
-
+    
     if([rootController.leftMenu.slideMenuDataSource respondsToSelector:@selector(configureSlideLayer:)]) {
-        [rootController.leftMenu.slideMenuDataSource configureSlideLayer:[destination.view layer]];        
+        [rootController.leftMenu.slideMenuDataSource configureSlideLayer:[destination.view layer]];
     }else{
         CALayer* layer = destination.view.layer;
         layer.shadowColor = [UIColor blackColor].CGColor;
@@ -65,9 +66,9 @@
     }
     
     [rootController switchToContentViewController:destination];
-
+    
     if ([rootController.leftMenu.slideMenuDataSource respondsToSelector:@selector(segueIdForIndexPath:)]) {
-        [rootController addContentViewController:destination withIndexPath:selectedIndexPath];        
+        [rootController addContentViewController:destination withIndexPath:selectedIndexPath];
     }
     Boolean disablePanGesture= NO;
     if ([rootController.leftMenu.slideMenuDataSource respondsToSelector:@selector(disablePanGestureForIndexPath:)]) {

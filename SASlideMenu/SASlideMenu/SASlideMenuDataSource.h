@@ -23,6 +23,8 @@
 
 // It is used to provide a custom configuration for the menu button.
 -(void) configureMenuButton:(UIButton*) menuButton;
+//if you want a different appearance for split menu buttons
+-(void) configureSplitMenuButton:(UIButton*) menuButton;
 
 // It is used to selectively activate the right menu button. It is a mandatory method if you need a right button.
 -(Boolean) hasRightMenuForIndexPath:(NSIndexPath*) indexPath;
