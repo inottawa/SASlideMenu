@@ -19,19 +19,39 @@
     SASlideMenuRootViewController* rootController = source.rootController;
     UINavigationController* destination = self.destinationViewController;
     
-    UIButton* menuButton = [[UIButton alloc] init];
-    [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents:UIControlEventTouchUpInside];
+    UIButton* menuButton = nil;
     
     if ([destination isKindOfClass:[UINavigationController class]]) {
         UINavigationItem* navigationItem = destination.navigationBar.topItem;
+        menuButton = [[UIButton alloc] init];
+        [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents:UIControlEventTouchUpInside];
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
         [rootController.leftMenu.slideMenuDataSource configureMenuButton:menuButton];
     } else if ([destination isKindOfClass:[UISplitViewController class]]) {
         UISplitViewController *sv = (UISplitViewController *)destination;
-        UINavigationController *navC = [sv.viewControllers objectAtIndex:0];
-        UINavigationItem* navigationItem = navC.navigationBar.topItem;
-        navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
-        [rootController.leftMenu.slideMenuDataSource configureSplitMenuButton:menuButton];
+        id viewController = [sv.viewControllers objectAtIndex:0];
+        if([viewController isMemberOfClass:[UITabBarController class]]) {
+            UITabBarController *tabBar = (UITabBarController*)viewController;
+            for (id idController in tabBar.viewControllers) {
+                if([idController isMemberOfClass:[UINavigationController class]]) {
+                    UINavigationController *nvController = (UINavigationController*)idController;
+                    if(nvController) {
+                        UINavigationItem* navigationItem = nvController.navigationBar.topItem;
+                        menuButton = [[UIButton alloc] init];
+                        [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents:UIControlEventTouchUpInside];
+                        navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+                        [rootController.leftMenu.slideMenuDataSource configureSplitMenuButton:menuButton];
+                    }
+                }
+            }
+        } else {
+            UINavigationController *navC = [sv.viewControllers objectAtIndex:0];
+            UINavigationItem* navigationItem = navC.navigationBar.topItem;
+            menuButton = [[UIButton alloc] init];
+            [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents:UIControlEventTouchUpInside];
+            navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+            [rootController.leftMenu.slideMenuDataSource configureSplitMenuButton:menuButton];
+        }
     }
     
     Boolean hasRightMenu = NO;
