@@ -7,7 +7,7 @@ A simple library to create sliding menus that can be used in storyboards and sup
 The repository is an Xcode 4 project that contains two example of the usage of the library and the library itself.
 
 # Usage
-You can use SASlide menu with both static cells and dynamic cell prototypes. In the project yuo will find two different target that use both type of cells to create a slide menu.
+You can use SASlide menu with both static cells and dynamic cell prototypes. In the project you will find two different target that use both type of cells to create a slide menu.
 To use it in your project follow these steps:
 * Add the SASlideMenu subdir and it's contents to your project
 * Add a new class that inherits from **SASlideMenuViewController** and include/implement **SASlideMenuDataSource** and **SASlideMenuDelegate**.
@@ -18,8 +18,8 @@ To use it in your project follow these steps:
 * Connect the **SASlideMenuRootViewController** with your subclass with a custom segue of type **SASlideMenuLeftMenuSegue**, set the segue identifier to **leftMenu**.
 * To add Content ViewController you have to to do the following:
  * Create your content view controller and embed it in a **UINavigationController**
- * Connet it to the **SASlideMenuViewController** via a SASlideMenuContentSegue. If you are using static cells and you simply connect from the corresponding cell it is not possible to cache the content view controller and the **segueIdForIndexPath** must not be implemented. If you are using dynamic cell prototype or you are using static cells and you want to cache the content view controller, assign an identifier that will be returned in the **sugueIdForIndexPath:** method linked to the desired indexPath.
-* To add a right menu, connect a new **UINavigationController** containing a **UITableViewController** to the menu view controller using a **SASlideMenuRightMenuSegue** and set the segue identifier to **rightMenu**. The new view controller will contain the right menu and will allow navigation.
+ * Connect it to the **SASlideMenuViewController** via a SASlideMenuContentSegue. If you are using static cells and you simply connect from the corresponding cell it is not possible to cache the content view controller and the **segueIdForIndexPath** must not be implemented. If you are using dynamic cell prototype or you are using static cells and you want to cache the content view controller, assign an identifier that will be returned in the **sugueIdForIndexPath:** method linked to the desired indexPath.
+ * To add a contextual right menu to that content, connect a new **UINavigationController** containing a **UITableViewController** to the **UINavigationController** using a **SASlideMenuRightMenuSegue** and set the segue identifier to **rightMenu**. Your **SASlideMenuDataSource** then have to return YES **hasRightMenuForIndexPath:(NSIndexPath*)indexPath**.
 
 Test it and you are done!
 

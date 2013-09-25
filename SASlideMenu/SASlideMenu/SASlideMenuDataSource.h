@@ -34,6 +34,12 @@
 // It is used to provide a custom configuration for the content CALayer, useful to change shadow style.
 -(void) configureSlideLayer:(CALayer*) layer;
 
+// The duration of the animation
+-(CGFloat) slideInAnimationDuration;
+
+// The duration of the animation
+-(CGFloat) slideOutAnimationDuration;
+
 // The visibile widht of the left menu
 -(CGFloat) leftMenuVisibleWidth;
 
@@ -49,4 +55,6 @@
 // It is used to selectively disable the pan gesture that slide the view controller. If not implemented the pan gesture is active for all the view controller.
 -(Boolean) disablePanGestureForIndexPath:(NSIndexPath*) indexPath;
 
+// It is used to enable the pan gesture that slide the view controller only on certain view zones. If not implemented the pan gesture is active for the entier view.
+-(Boolean) shouldRespondToGesture:(UIGestureRecognizer*) gesture forIndexPath:(NSIndexPath*)indexPath;
 @end

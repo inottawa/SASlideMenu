@@ -112,7 +112,11 @@ typedef enum {
 }
 
 -(void) doSlideToSide{
-	[self.view editEditing:YES];
+<<<<<<< HEAD
+    [self.view endEditing:YES];
+    if ([self.leftMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuWillSlideToSide)]){
+        [self.leftMenu.slideMenuDelegate slideMenuWillSlideToSide];
+=======
     if ([self.leftMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuWillSlideToSide:)]){
         [self.leftMenu.slideMenuDelegate slideMenuWillSlideToSide:self.selectedContent];
     }
@@ -120,6 +124,7 @@ typedef enum {
     CGFloat duration = kSlideInInterval;
     if ([self.leftMenu.slideMenuDataSource respondsToSelector:@selector(slideInAnimationDuration)]) {
         duration = [self.leftMenu.slideMenuDataSource slideInAnimationDuration];
+>>>>>>> 9485eaad31996d3efe18b11a466fe798bcfcb937
     }
     
     [UIView animateWithDuration:duration
@@ -485,6 +490,14 @@ typedef enum {
         self.rightMenu.view.frame = rightFrame;
         self.shieldWithMenu.frame = CGRectMake(0, 0, bounds.size.width, bounds.size.height);
     }
+}
+
+// for ios5
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ) {
+        return NO;
+    }
+    return YES;
 }
 
 -(void) viewDidLoad{

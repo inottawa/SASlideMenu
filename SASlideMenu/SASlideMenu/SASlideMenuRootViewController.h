@@ -11,7 +11,7 @@
 
 @class SASlideMenuNavigationController;
 @class SASlideMenuViewController;
-@interface SASlideMenuRootViewController : UIViewController<UITableViewDelegate>
+@interface SASlideMenuRootViewController : UIViewController
 
 
 @property (nonatomic,strong) SASlideMenuViewController* leftMenu;
@@ -19,7 +19,7 @@
 @property (nonatomic,assign) Boolean isRightMenuEnabled;
 @property (nonatomic,strong) SASlideMenuNavigationController* navigationController;
 
--(void) switchToContentViewController:(UINavigationController*) content;
+-(void) switchToContentViewController:(UINavigationController*) content completion:(void (^)(void))completion;
 -(void) addContentViewController:(UIViewController*) content withIndexPath:(NSIndexPath*)indexPath;
 
 -(void) popRightNavigationController;
@@ -28,8 +28,9 @@
 -(UINavigationController*) controllerForIndexPath:(NSIndexPath*) indexPath;
 
 -(void) doSlideToSide;
+-(void) doSlideToLeftSide;
 -(void) rightMenuAction;
+-(void) addRightMenu;
 
-
-
+-(void) panItem:(UIPanGestureRecognizer*)gesture;
 @end

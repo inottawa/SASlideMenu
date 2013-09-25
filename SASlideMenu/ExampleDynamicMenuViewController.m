@@ -8,7 +8,7 @@
 
 #import "ExampleDynamicMenuViewController.h"
 #import "ColoredViewController.h"
-
+#import "GreenViewController.h"
 @interface ExampleDynamicMenuViewController ()<SASlideMenuDataSource,SASlideMenuDelegate, UITableViewDataSource>
 
 @property (nonatomic) CGFloat selectedHue;
@@ -45,6 +45,9 @@
     if ([controller isKindOfClass:[ColoredViewController class]]) {
         ColoredViewController* coloredViewController = (ColoredViewController*) controller;
         [coloredViewController setBackgroundHue:selectedHue brightness:selectedBrightness];
+    }else if ([controller isKindOfClass:[GreenViewController class]]) {
+        GreenViewController* greenController = (GreenViewController*) controller;
+        greenController.menuController = self;
     }
 }
 
@@ -76,30 +79,32 @@
 // It maps each indexPath to the segueId to be used. The segue is performed only the first time the controller needs to loaded, subsequent switch to the content controller will use the already loaded controller
 
 -(NSString*) segueIdForIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section > 0) {
-        return @"coloredNoRightMenu";
+    NSString* result;
+    switch (indexPath.section) {
+        case 0:
+            result = @"red";
+            break;
+        case 1:
+            result = @"green";
+            break;
+        default:
+            result = @"blue";
+            break;
     }
-    return @"colored";
+    return result;
 }
 
 -(Boolean) slideOutThenIn{
-    return NO;
+    return YES;
 }
 //Disable caching for the controller at the first row of each section
 -(Boolean) disableContentViewControllerCachingForIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row ==0) {
-        return YES;
-    }
-    return NO;
+       return YES;
 }
 
 //Enable the right menu for the the view controller in the first section
 -(Boolean) hasRightMenuForIndexPath:(NSIndexPath *)indexPath{
-
-    if (indexPath.section == 0) {
-        return YES;
-    }
-    return NO;
+    return YES;
 }
 
 #pragma mark -
@@ -149,6 +154,12 @@
     return 300;
 }
 
+//restricts pan gesture interation to 50px on the left and right of the view.
+-(Boolean) shouldRespondToGesture:(UIGestureRecognizer*) gesture forIndexPath:(NSIndexPath*)indexPath {
+    CGPoint touchPosition = [gesture locationInView:self.view];
+    return (touchPosition.x < 50.0 || touchPosition.x > self.view.bounds.size.width - 50.0f);
+}
+
 #pragma mark -
 #pragma mark UITableViewDelegate
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -169,28 +180,29 @@
 #pragma mark -
 #pragma mark SASlideMenuDelegate
 
--(void) slideMenuWillSlideIn{
+-(void) slideMenuWillSlideIn:(UINavigationController *)selectedContent{
     NSLog(@"slideMenuWillSlideIn");
 }
--(void) slideMenuDidSlideIn{
+-(void) slideMenuDidSlideIn:(UINavigationController *)selectedContent{
     NSLog(@"slideMenuDidSlideIn");
 }
--(void) slideMenuWillSlideToSide{
+-(void) slideMenuWillSlideToSide:(UINavigationController *)selectedContent{
     NSLog(@"slideMenuWillSlideToSide");
 }
--(void) slideMenuDidSlideToSide{
+-(void) slideMenuDidSlideToSide:(UINavigationController *)selectedContent{
     NSLog(@"slideMenuDidSlideToSide");    
 }
--(void) slideMenuWillSlideOut{
+-(void) slideMenuWillSlideOut:(UINavigationController *)selectedContent{
     NSLog(@"slideMenuWillSlideOut");
 }
--(void) slideMenuDidSlideOut{
+-(void) slideMenuDidSlideOut:(UINavigationController *)selectedContent{
     NSLog(@"slideMenuDidSlideOut");
 }
--(void) slideMenuWillSlideToLeft{
+-(void) slideMenuWillSlideToLeft:(UINavigationController *)selectedContent{
     NSLog(@"slideMenuWillSlideToLeft");    
 }
--(void) slideMenuDidSlideToLeft{
+-(void) slideMenuDidSlideToLeft:(UINavigationController *)selectedContent{
     NSLog(@"slideMenuDidSlideToLeft");
 }
+ 
 @end
