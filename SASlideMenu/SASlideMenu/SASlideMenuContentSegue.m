@@ -54,11 +54,6 @@
         }
     }
     
-    [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents:UIControlEventTouchUpInside];
-    
-    UINavigationItem* navigationItem = destination.navigationBar.topItem;
-    navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
-    
     Boolean hasRightMenu = NO;
     rootController.isRightMenuEnabled = NO;
     NSIndexPath* selectedIndexPath = [rootController.leftMenu.tableView indexPathForSelectedRow];
