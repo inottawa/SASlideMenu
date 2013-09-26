@@ -112,7 +112,7 @@ typedef enum {
 }
 
 -(void) doSlideToSide{
-	[self.view editEditing:YES];
+	[self.view endEditing:YES];
     if ([self.leftMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuWillSlideToSide:)]){
         [self.leftMenu.slideMenuDelegate slideMenuWillSlideToSide:self.selectedContent];
     }
