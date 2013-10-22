@@ -23,8 +23,8 @@
     
     if ([destination isKindOfClass:[UINavigationController class]]) {
         UINavigationItem* navigationItem = destination.navigationBar.topItem;
-        [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents: UIControlEventTouchUpInside];
         menuButton = [[UIButton alloc] init];
+        [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents: UIControlEventTouchUpInside];
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
         if ([rootController.leftMenu.slideMenuDataSource respondsToSelector:@selector(configureMenuButton:)])
             [rootController.leftMenu.slideMenuDataSource configureMenuButton:menuButton];
