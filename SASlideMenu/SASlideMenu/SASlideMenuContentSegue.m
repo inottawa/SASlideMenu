@@ -19,10 +19,11 @@
     SASlideMenuRootViewController* rootController = source.rootController;
     UINavigationController* destination = self.destinationViewController;
 
-    UIButton* menuButton = [[UIButton alloc] init];
+    UIButton* menuButton;
     
     if ([destination isKindOfClass:[UINavigationController class]]) {
         UINavigationItem* navigationItem = destination.navigationBar.topItem;
+        menuButton = [[UIButton alloc] init];
         [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents: UIControlEventTouchUpInside];
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
         if ([rootController.leftMenu.slideMenuDataSource respondsToSelector:@selector(configureMenuButton:)])
@@ -37,6 +38,7 @@
                     UINavigationController *nvController = (UINavigationController*)idController;
                     if(nvController) {
                         UINavigationItem* navigationItem = nvController.navigationBar.topItem;
+                        menuButton = [[UIButton alloc] init];
                         [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents:UIControlEventTouchUpInside];
                         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
                         if ([rootController.leftMenu.slideMenuDataSource respondsToSelector:@selector(configureSplitMenuButton:)])
@@ -47,6 +49,7 @@
         } else {
             UINavigationController *navC = [sv.viewControllers objectAtIndex:0];
             UINavigationItem* navigationItem = navC.navigationBar.topItem;
+            menuButton = [[UIButton alloc] init];            
             [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents:UIControlEventTouchUpInside];
             navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
             if ([rootController.leftMenu.slideMenuDataSource respondsToSelector:@selector(configureSplitMenuButton:)])
